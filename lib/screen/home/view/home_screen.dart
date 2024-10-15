@@ -40,50 +40,73 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Obx(
-        () => controller.dbList.isNotEmpty ?ListView.builder(
-          itemCount: controller.dbList.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ListTile(
-                  onLongPress: () async {
-                    DatabaseHelper.helper.deleteDb(controller.dbList[index].cid!);
-                    controller.readData();
-                  },
-                  title: Row(
+        () => controller.dbList.isNotEmpty
+            ? ListView.builder(
+                itemCount: controller.dbList.length,
+                itemBuilder: (context, index) {
+                  return Column(
                     children: [
-                      Text("${controller.dbList[index].name}"),
-                      IconButton(
-                        onPressed: () async {
-                          FireDbModel model = FireDbModel(
-                              name: controller.dbList[index].name,
-                              mobile: controller.dbList[index].mobile);
-                         await FirebasedbHelper.helper.setData(model);
-                         await controller.fireDbData();
+                      ListTile(
+                        onTap: () {
+                          Get.defaultDialog(
+                              title: "Update",
+                              actions: [],
+                              content: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text("Yes"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text("No"),
+                                  )
+                                ],
+                              ));
                         },
-                        icon: Icon(Icons.backup),
-                      )
+                        onLongPress: () async {
+                          DatabaseHelper.helper
+                              .deleteDb(controller.dbList[index].cid!);
+                          controller.readData();
+                        },
+                        title: Row(
+                          children: [
+                            Text("${controller.dbList[index].name}"),
+                            IconButton(
+                              onPressed: () async {
+                                FireDbModel model = FireDbModel(
+                                    name: controller.dbList[index].name,
+                                    mobile: controller.dbList[index].mobile);
+                                await FirebasedbHelper.helper.setData(model);
+                                await controller.fireDbData();
+                              },
+                              icon: Icon(Icons.backup),
+                            )
+                          ],
+                        ),
+                        subtitle: Text("${controller.dbList[index].mobile}"),
+                        trailing: IconButton(
+                          onPressed: () async {
+                            Uri call = Uri(
+                                scheme: 'tel',
+                                path: "${controller.dbList[index].mobile}");
+                            await launchUrl(call);
+                          },
+                          icon: Icon(Icons.call),
+                        ),
+                        leading: IconButton(
+                            onPressed: () {}, icon: Icon(Icons.person)),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.sizeOf(context).width * 0.9,
+                          child: Divider()),
                     ],
-                  ),
-                  subtitle: Text("${controller.dbList[index].mobile}"),
-                  trailing: IconButton(
-                    onPressed: () async {
-                      Uri call = Uri(
-                          scheme: 'tel',
-                          path: "${controller.dbList[index].mobile}");
-                      await launchUrl(call);
-                    },
-                    icon: Icon(Icons.call),
-                  ),
-                  leading: IconButton(onPressed: () {
-
-                  }, icon: Icon(Icons.person)),
-                ),
-                SizedBox(width: MediaQuery.sizeOf(context).width * 0.9,child: Divider()),
-              ],
-            );
-          },
-        ) :Center(child: Text("No Contact")),
+                  );
+                },
+              )
+            : Center(child: Text("No Contact")),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue.shade200,

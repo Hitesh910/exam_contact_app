@@ -100,6 +100,8 @@ class _ContactScreenState extends State<ContactScreen> {
                     DatabaseHelper.helper.insertDb(model);
                     DatabaseHelper.helper.getData();
                     controller.readData();
+                    txtName.clear();
+                    txtMobile.clear();
                   }
                 },
                 child: const Text("Save"),
