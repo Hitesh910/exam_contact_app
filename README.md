@@ -13,12 +13,5 @@ A simple Contact Management application built using Flutter, Firebase, and GetX 
     <img src = "https://github.com/user-attachments/assets/bbf598a9-eb8d-4d5e-9a71-8b2e93fa129d"height="650"weight="270">
       <img src = "https://github.com/user-attachments/assets/cc997559-53fc-45d2-8bd7-6f0f6a5f8662"height="650"weight="270">
      <img src = "https://github.com/user-attachments/assets/84fbf3eb-c8b0-4703-b8cf-3feeca68edfe"height="650"weight="270">
-
-    
-
-         
-        
-  
 </p>
-
 
