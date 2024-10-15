@@ -2,18 +2,17 @@ import 'package:sqflite/sqflite.dart';
 
 import '../../screen/home/model/database_model.dart';
 
-class DatabaseHelper
-{
+class DatabaseHelper {
   static DatabaseHelper helper = DatabaseHelper._();
+
   DatabaseHelper._();
+
   Database? database;
 
-  Future<Database?> checkDb()
-  async {
-    if(database == null)
-      {
-        database = await createDb();
-      }
+  Future<Database?> checkDb() async {
+    if (database == null) {
+      database = await createDb();
+    }
     return database!;
   }
 
@@ -35,31 +34,36 @@ class DatabaseHelper
 
   Future<void> insertDb(DatabaseModel model) async {
     database = await checkDb();
-    database!.insert('contact', {'name': model.name,'mobile': model.mobile});
+    database!.insert('contact', {'name': model.name, 'mobile': model.mobile});
     // database!.execute(query);
   }
 
-  Future<List<DatabaseModel>> getData()
-  async {
+  Future<List<DatabaseModel>> getData() async {
     database = await checkDb();
     String query = "SELECT * FROM contact";
-  List<Map> l1 =await database!.rawQuery(query);
-  List<DatabaseModel> dbData = l1.map((e) => DatabaseModel.mapToModel(e),).toList();
-  print("================  ${dbData.length}");
-  return dbData;
-
+    List<Map> l1 = await database!.rawQuery(query);
+    List<DatabaseModel> dbData = l1
+        .map(
+          (e) => DatabaseModel.mapToModel(e),
+        )
+        .toList();
+    print("================  ${dbData.length}");
+    return dbData;
   }
 
-  void deleteDb(int id)
-  {
-    database!.delete("contact",where: "cid=?",whereArgs: [id]);
+  void deleteDb(int id) {
+    database!.delete("contact", where: "cid=?", whereArgs: [id]);
   }
 
-  void updateDb(DatabaseModel model)
-  {
-    database!.update("contact", {
-      "name":model.name,
-      "mobile":model.mobile,
-    },where: "id=?",whereArgs: [model.cid]);
+  Future<void> updateDb(DatabaseModel model) async {
+    database = await checkDb();
+    database!.update(
+        "contact",
+        {
+          "name": model.name,
+          "mobile": model.mobile,
+        },
+        where: "cid=?",
+        whereArgs: [model.cid]);
   }
 }

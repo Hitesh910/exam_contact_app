@@ -51,32 +51,39 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       ListTile(
                         onTap: () {
+                          txtName.text = controller.dbList[index].name!;
+                          txtMobile.text = controller.dbList[index].mobile.toString();
                           Get.defaultDialog(
                               title: "Update",
                               actions: [
-                                Text("Name"),
-                                TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtName,),
-                                Text("Mobile"),
-                                TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtMobile,)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        DatabaseModel model = DatabaseModel(name: txtName.text,mobile: int.parse(txtMobile.text));
+                                        DatabaseHelper.helper.updateDb(model);
+                                        controller.readData();
+                                      },
+                                      child: Text("Yes"),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: Text("No"),
+                                    )
+                                  ],
+                                )
                               ],
-                              content: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              content: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      DatabaseModel model = DatabaseModel(name: txtName.text,mobile: int.parse(txtMobile.text));
-                                      DatabaseHelper.helper.updateDb(model);
-                                      controller.readData();
-                                    },
-                                    child: Text("Yes"),
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    child: Text("No"),
-                                  )
+                                  Text("Name"),
+                                  TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtName,),
+                                  Text("Mobile"),
+                                  TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtMobile,)
                                 ],
                               ));
                         },
