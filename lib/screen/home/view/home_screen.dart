@@ -1,4 +1,5 @@
 import 'package:contact_app/screen/home/controller/home_controller.dart';
+import 'package:contact_app/screen/home/model/database_model.dart';
 import 'package:contact_app/screen/home/model/firebase_model.dart';
 import 'package:contact_app/utils/helper/firebasedb_helper.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeController controller = Get.put(HomeController());
+  TextEditingController txtName = TextEditingController();
+  TextEditingController txtMobile = TextEditingController();
 
   @override
   void initState() {
@@ -50,17 +53,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () {
                           Get.defaultDialog(
                               title: "Update",
-                              actions: [],
+                              actions: [
+                                Text("Name"),
+                                TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtName,),
+                                Text("Mobile"),
+                                TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtMobile,)
+                              ],
                               content: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      DatabaseModel model = DatabaseModel(name: txtName.text,mobile: int.parse(txtMobile.text));
+                                      DatabaseHelper.helper.updateDb(model);
+                                      controller.readData();
+                                    },
                                     child: Text("Yes"),
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.back();
+                                    },
                                     child: Text("No"),
                                   )
                                 ],

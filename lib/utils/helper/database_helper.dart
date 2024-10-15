@@ -54,4 +54,12 @@ class DatabaseHelper
   {
     database!.delete("contact",where: "cid=?",whereArgs: [id]);
   }
+
+  void updateDb(DatabaseModel model)
+  {
+    database!.update("contact", {
+      "name":model.name,
+      "mobile":model.mobile,
+    },where: "id=?",whereArgs: [model.cid]);
+  }
 }

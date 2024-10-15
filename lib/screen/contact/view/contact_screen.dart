@@ -48,6 +48,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   controller: txtName,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
+                    hintText: "Enter name",
                   ),
                   validator: (value) {
                     if(value!.isEmpty)
@@ -70,7 +71,7 @@ class _ContactScreenState extends State<ContactScreen> {
                     controller: txtMobile,
                     keyboardType: TextInputType.phone,
                     decoration:
-                        const InputDecoration(border: OutlineInputBorder()),
+                        const InputDecoration(border: OutlineInputBorder(),hintText: "Enter mobile"),
                     validator: (value) {
                       if(value!.isEmpty)
                       {
