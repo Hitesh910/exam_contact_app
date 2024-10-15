@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade100,
+        backgroundColor: Colors.blue.shade200,
         title: const Text("Contact App"),
         actions: [
           IconButton(
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Obx(
-        () => ListView.builder(
+        () => controller.dbList.isNotEmpty ?ListView.builder(
           itemCount: controller.dbList.length,
           itemBuilder: (context, index) {
             return Column(
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             );
           },
-        ),
+        ) :Center(child: Text("No Contact")),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue.shade200,

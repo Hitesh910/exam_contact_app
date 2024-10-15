@@ -68,6 +68,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   width: width * 1,
                   child: TextFormField(
                     controller: txtMobile,
+                    keyboardType: TextInputType.phone,
                     decoration:
                         const InputDecoration(border: OutlineInputBorder()),
                     validator: (value) {
@@ -75,10 +76,14 @@ class _ContactScreenState extends State<ContactScreen> {
                       {
                         return "Value is Required";
                       }
-                      else if(value.length <= 10)
+                      else if(value.length < 10)
                         {
                           return "Only 10 number required";
                         }
+                      else if(value.length > 10)
+                      {
+                        return "Only 10 number required";
+                      }
                       return null;
                     },
                   ),
@@ -99,7 +104,7 @@ class _ContactScreenState extends State<ContactScreen> {
                 },
                 child: const Text("Save"),
                 style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Colors.blue.shade500),
+                  backgroundColor: WidgetStatePropertyAll(Colors.blue.shade200),
                 ),
               )
             ],

@@ -21,55 +21,58 @@ class _BackupScreenState extends State<BackupScreen> {
     // TODO: implement initState
     super.initState();
     controller.fireDbData();
-    print("================${controller.fireDbList[0].name}");
+    // print("================${controller.fireDbList[0].name}");
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Backup Contact"),),
-      body: ListView.builder(
-        itemCount: controller.fireDbList.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              ListTile(
-                onLongPress: () async {
-                  FirebasedbHelper.helper.deleteData(controller.fireDbList[index].cid!);
-                  controller.readData();
-                },
-                title: Row(
-                  children: [
-                    Text("${controller.fireDbList[index].name}"),
-                    // IconButton(
-                    //   onPressed: () async {
-                    //     FireDbModel model = FireDbModel(
-                    //         name: controller.fireDbList[index].name,
-                    //         mobile: controller.dbList[index].mobile);
-                    //     await FirebasedbHelper.helper.setData(model);
-                    //     await controller.fireDbData();
-                    //   },
-                    //   icon: Icon(Icons.backup),
-                    // )
-                  ],
-                ),
-                subtitle: Text("${controller.fireDbList[index].mobile}"),
-                trailing: IconButton(
-                  onPressed: () async {
-                    Uri call = Uri(
-                        scheme: 'tel',
-                        path: "${controller.fireDbList[index].mobile}");
-                    await launchUrl(call);
+      appBar: AppBar(backgroundColor: Colors.blue.shade200,title: Text("Backup Contact"),),
+      body: Obx(
+        () => controller.fireDbList.isNotEmpty ?ListView.builder(
+          itemCount: controller.fireDbList.length,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                ListTile(
+                  onLongPress: () async {
+                    FirebasedbHelper.helper.deleteData(controller.fireDbList[index].cid!);
+                    controller.fireDbData();
+                    print("=========== firebase cid ${controller.fireDbList[index].cid!}");
                   },
-                  icon: Icon(Icons.call),
-                ),
-                leading: IconButton(onPressed: () {
+                  title: Row(
+                    children: [
+                      Text("${controller.fireDbList[index].name}"),
+                      // IconButton(
+                      //   onPressed: () async {
+                      //     FireDbModel model = FireDbModel(
+                      //         name: controller.fireDbList[index].name,
+                      //         mobile: controller.dbList[index].mobile);
+                      //     await FirebasedbHelper.helper.setData(model);
+                      //     await controller.fireDbData();
+                      //   },
+                      //   icon: Icon(Icons.backup),
+                      // )
+                    ],
+                  ),
+                  subtitle: Text("${controller.fireDbList[index].mobile}"),
+                  trailing: IconButton(
+                    onPressed: () async {
+                      Uri call = Uri(
+                          scheme: 'tel',
+                          path: "${controller.fireDbList[index].mobile}");
+                      await launchUrl(call);
+                    },
+                    icon: Icon(Icons.call),
+                  ),
+                  leading: IconButton(onPressed: () {
 
-                }, icon: Icon(Icons.person)),
-              ),
-              SizedBox(width: MediaQuery.sizeOf(context).width * 0.9,child: Divider()),
-            ],
-          );
-        },
+                  }, icon: Icon(Icons.person)),
+                ),
+                SizedBox(width: MediaQuery.sizeOf(context).width * 0.9,child: Divider()),
+              ],
+            );
+          },
+        ) :Center(child: Text("No data"),),
       ),
     );
   }
