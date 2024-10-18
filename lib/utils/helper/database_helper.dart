@@ -57,6 +57,8 @@ class DatabaseHelper {
 
   Future<void> updateDb(DatabaseModel model) async {
     database = await checkDb();
+    print("==================== Update ${model.name}");
+    print("==================== Update ${model.cid}");
     database!.update(
         "contact",
         {

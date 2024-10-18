@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ListTile(
                         onTap: () {
                           txtName.text = controller.dbList[index].name!;
-                          txtMobile.text = controller.dbList[index].mobile.toString();
+                          txtMobile.text =
+                              controller.dbList[index].mobile.toString();
                           Get.defaultDialog(
                               title: "Update",
                               actions: [
@@ -62,9 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
-                                        DatabaseModel model = DatabaseModel(name: txtName.text,mobile: int.parse(txtMobile.text));
+                                        print(
+                                            "===================== Home screen ${txtName.text}");
+                                        DatabaseModel model = DatabaseModel(
+                                            name: txtName.text,
+                                            mobile: int.parse(txtMobile.text),
+                                            cid: controller.dbList[index].cid);
                                         DatabaseHelper.helper.updateDb(model);
                                         controller.readData();
+                                        Get.back();
                                       },
                                       child: Text("Yes"),
                                     ),
@@ -81,9 +88,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text("Name"),
-                                  TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtName,),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder()),
+                                    controller: txtName,
+                                  ),
                                   Text("Mobile"),
-                                  TextFormField(decoration: InputDecoration(border: OutlineInputBorder()),controller: txtMobile,)
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder()),
+                                    controller: txtMobile,
+                                  )
                                 ],
                               ));
                         },
